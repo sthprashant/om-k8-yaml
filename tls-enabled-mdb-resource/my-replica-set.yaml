@@ -1,0 +1,23 @@
+---
+apiVersion: mongodb.com/v1
+kind: MongoDB
+metadata:
+  name: my-replica-set
+spec:
+  members: 3
+  version: "6.0.1-ent"
+  opsManager:
+    configMapRef:
+           # Must match metadata.name in ConfigMap file
+      name: om-testproject-configmap
+  credentials: organization-secret
+  type: ReplicaSet
+  persistent: true
+  security:
+    tls:
+    #lined to CA using config map
+      ca: custom-ca
+      enabled: true
+    authentication:
+      enabled: true
+      modes: ["X509"]
