@@ -1,0 +1,22 @@
+---
+apiVersion: mongodb.com/v1
+kind: MongoDBOpsManager
+metadata:
+  name: ops-manager
+spec:
+  replicas: 1
+  version: 6.0.19 #ops manager version
+  adminCredentials: <secret-name>  # Should match metadata.name
+                                           # in the secret
+                                           # for the admin user
+  configuration:
+    mms.centralUrl: http://<name>:<port>
+  externalConnectivity:
+    type: NodePort
+    port: <port>
+
+  applicationDatabase:
+    topology: SingleCluster
+    members: 3
+    version: 6.0.9-ent #appdb version
+...
