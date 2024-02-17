@@ -1,0 +1,40 @@
+apiVersion: mongodb.com/v1
+kind: MongoDBOpsManager
+metadata:
+  name: om6-pa-test
+spec:
+  #OpsManager
+  replicas: 1
+  version: 6.0.11
+  adminCredentials:
+    om-admin-secret # Should match metadata.name
+    # in the secret
+    # for the admin user
+  configuration:
+    mms.centralUrl: $MMS_URL
+  externalConnectivity:
+    type: NodePort
+    port: $MMS_NODE_PORT
+# Application database Config
+  applicationDatabase:
+    members: 3
+    version: 5.0.22-ubi8
+# Backup Config
+  backup:
+    enabled: true
+    members: 2
+    # HeadDB
+    headDB:
+      labelSelector:
+        matchLabels:
+          app: "headb-om6-pa-test"
+    #Oplog Store
+    opLogStores:
+    - name: om6-pa-test-oplog-store
+      mongodbResourceRef:
+        name: om6-pa-test-oplog-store
+    #Block Store
+    blockStores:
+    - name: om6-pa-test-blockstore
+      mongodbResourceRef:
+        name: om6-pa-test-blockstore

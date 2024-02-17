@@ -1,0 +1,9 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: backuptestrs-cfg
+  namespace: mongodb
+data:
+  projectName: backuptestrs-cfg # this is an optional parameter
+  orgId: $MMS_ORG_ID # this is a required parameter
+  baseUrl: $MMS_BASE_URL

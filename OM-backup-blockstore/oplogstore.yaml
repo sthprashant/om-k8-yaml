@@ -1,0 +1,14 @@
+apiVersion: mongodb.com/v1
+kind: MongoDB
+metadata:
+  name: om6-pa-test-oplog-store
+spec:
+  members: 3
+  version: "6.0.2-ent"
+  opsManager:
+    configMapRef:
+           # Must match metadata.name in ConfigMap file
+      name: om6-pa-test-oplog-store-cfg
+  credentials: orgownersecret
+  type: ReplicaSet
+  persistent: true
